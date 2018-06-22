@@ -33,6 +33,7 @@ export default {
 
 <template>
 <div>
+  <map-container :restaurants="restaurants" ></map-container>
   <filter-option/>
   <restaurant-list  :restaurants="restaurants"/>
  </div>

@@ -1,10 +1,11 @@
 <script  >
 export default {
   props: {
-    restaurant: {
-      type: Object,
-        required: true
+    restaurants: {
+      type: Array,
+      required: true,
     },
+
   },
   data() {
     return {
@@ -19,26 +20,47 @@ export default {
   created() {
       setTimeout(() => {
 
-        
-     
-      let lat = this.restaurant.latlng.lat;
-      let lng = this.restaurant.latlng.lng
-      let name = this.restaurant.name
+      let routeName = this.$route.name;
 
-      let myMap = new ymaps.Map("map", {
-                center: [lat, lng],
-                zoom: 18
+        if (routeName === "Home"){
+           
+          let myMap = new ymaps.Map("map", {
+                center: [40.722216, -73.987501],
+                zoom: 12
         });
 
+           this.restaurants.map((restaurant => {
+              let lat = restaurant.latlng.lat;
+              let lng = restaurant.latlng.lng;
+              let name = restaurant.name;
 
-     let myPlacemark = new ymaps.Placemark([lat, lng], { hintContent: name, balloonContent: name  });
+              let myPlacemark = new ymaps.Placemark([lat, lng], { hintContent: name, balloonContent: name  });
             
-            myMap.geoObjects.add(myPlacemark);
+              myMap.geoObjects.add(myPlacemark);
+      
+           }));
+           
+        }
 
+        if(routeName === "Single") {
+         let restaurant; 
 
+         [restaurant] = this.restaurants.filter(restaurant => restaurant.id == this.$route.params.id);
+        
+        let lat = restaurant.latlng.lat;
+        let lng = restaurant.latlng.lng;
+        let name = restaurant.name;
 
-     console.log(lat)
-
+        let myMap = new ymaps.Map("map", {
+                center: [lat, lng],
+                zoom: 12
+        });
+        console.log(myMap);
+     
+        let myPlacemark = new ymaps.Placemark([lat, lng], { hintContent: name, balloonContent: name  });
+            
+        myMap.geoObjects.add(myPlacemark);   
+        }
     }, 10)
   },
 

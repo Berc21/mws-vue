@@ -27,9 +27,9 @@ export default {
   },
   data() {
     return {
+      restaurants: [],
       restaurant: {},
       comments: [],
-      name: '',
     };
   },
   methods: {
@@ -38,11 +38,11 @@ export default {
       fetch(url)
         .then(res => res.json())
         .then(res => {
+          this.restaurants = res;
           [restaurant] = res.filter(
             item => item.id == this.$route.params.id
           );
           this.restaurant = restaurant;
-          this.name = restaurant.name;
         })
         .catch(err => console.log(err));
     },
@@ -63,7 +63,7 @@ export default {
 <div>
 
  <bread-crumb :restaurant="restaurant" />
- <map-container :restaurant="restaurant" > </map-container>
+ <map-container :restaurants="restaurants" > </map-container>
  <restaurant-details :restaurant="restaurant" />
  <restaurant-comments  :comments="comments" />
  </div>

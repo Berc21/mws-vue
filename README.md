@@ -1,6 +1,6 @@
-# test
+# MWS Vue
 
-> A Vue.js project
+> This repo aims to transfrom mws project to vue spa.
 
 ## Build Setup
 
