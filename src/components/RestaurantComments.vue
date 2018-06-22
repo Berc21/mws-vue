@@ -49,12 +49,12 @@ export default {
 }
 #reviews-list li {
   background-color: #fff;
-    border: 2px solid #f3f3f3;
+  border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
   margin: 0 0 30px;
   overflow: hidden;
-  padding: 0 20px 20px;
+  padding: 20px 20px;
   position: relative;
   width: 85%;
 }
@@ -63,6 +63,21 @@ export default {
 }
 #restaurant-hours td {
   color: #666;
+}
+
+@media only screen and (max-width: 60rem) {
+  
+#reviews-container {
+ width: 100%;
+
+}
+
+#reviews-list li {
+    width: 30rem;
+    max-width: 100%;
+  }
+
+
 }
 
 </style>

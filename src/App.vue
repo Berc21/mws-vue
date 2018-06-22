@@ -1,11 +1,3 @@
-<template>
-  <div id="app">
-        <top-header/>
-        <router-view />
-        <bottom-footer/>
-  </div>
-</template>
-
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Home from "@/pages/Home.vue";
@@ -21,53 +13,92 @@ export default {
 };
 </script>
 
+<template>
+  <div id="app">
+        <top-header/>
+        <router-view />
+        <bottom-footer/>
+  </div>
+</template>
+
 <style>
 @charset "utf-8";
 /* CSS Document */
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+* {
+  padding: 0;
+  margin: 0;
 }
 
-
-
-body,td,th,p{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333;
-	line-height: 1.5;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  /* it means 1rem 10px, very easy to calculate rem */
+}
+
 body {
-	background-color: #fdfdfd;
-	margin: 0;
-	position:relative;
-}
-ul, li {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333;
-}
-a {
-	color: orange;
-	text-decoration: none;
-}
-a:hover, a:focus {
-	color: #3397db;
-	text-decoration: none;
-}
-a img{
-	border: none 0px #fff;
-}
-h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0 0 20px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #F3F3F3;
+  position: relative;
 }
 
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-	display: block;
+:focus {
+  outline: 0.2rem dotted #F44336;
+}
+
+ul,
+li {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+a {
+  color: orange;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #3397db;
+  text-decoration: none;
+}
+
+a img {
+  border: none 0 #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 0 2rem;
+}
+
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 
 

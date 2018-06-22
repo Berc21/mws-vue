@@ -18,10 +18,10 @@ export default {
 <style scoped>
 #footer {
   background-color: #444;
-  color: #aaa;
-  font-size: 8pt;
+  color: #fff;
+  font-size: 1.4rem;
   letter-spacing: 1px;
-  padding: 25px;
+  padding: 2.5rem;
   text-align: center;
   text-transform: uppercase;
 }

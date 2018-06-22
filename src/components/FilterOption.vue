@@ -1,8 +1,6 @@
 
 <script>
-export default {
-  
-}
+export default {};
 </script>
 
 
@@ -19,28 +17,43 @@ export default {
 </template>
 
 <style scoped>
-.filter-options {
-  width: 100%;
-  height: 50px;
-  background-color: #3397DB;
-  align-items: center;
+  .filter-options {
+    width: 100%;
+    background-color: #3397DB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .filter-options h2 {
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0 2rem;
+  }
+
+  .filter-options select {
+    background-color: white;
+    border: 1px solid #fff;
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem;
+    height: 3.5rem;
+    letter-spacing: 0;
+    margin: 1rem;
+    padding: 0 1rem;
+    width: 20rem;
+  }
+
+@media only screen and (max-width: 60rem) {
+  
+ .filter-options {
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+
 }
-.filter-options h2 {
-  color: white;
-  font-size: 1rem;
-  font-weight: normal;
-  line-height: 1;
-  margin: 0 20px;
-}
-.filter-options select {
-  background-color: white;
-  border: 1px solid #fff;
-  font-family: Arial,sans-serif;
-  font-size: 11pt;
-  height: 35px;
-  letter-spacing: 0;
-  margin: 10px;
-  padding: 0 10px;
-  width: 200px;
-}
+
+
+
 </style>

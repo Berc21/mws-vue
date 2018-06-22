@@ -49,49 +49,85 @@ export default {
         </tr> 
       </table>
 
-      <button @click="handleLike"  v-bind:class="{ isFav: isFav }" > ❤ </button>
+      <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.isFav {
-  color: red;
-}
+
 #restaurant-name {
-  color: #f18200;
+  color: #f44336;
   font-family: Arial, sans-serif;
-  font-size: 20pt;
-  font-weight: 200;
+  font-size: 2.5rem;
+  font-weight: 300;
   letter-spacing: 0;
-  margin: 15px 0 30px;
+  margin: 1.5rem 0 3rem;
   text-transform: uppercase;
   line-height: 1.1;
 }
+
 #restaurant-img {
-  width: 90%;
+  max-width: 100%;
 }
+
 #restaurant-address {
-  font-size: 12pt;
+  font-size: 1.6rem;
   margin: 10px 0px;
 }
+
 #restaurant-cuisine {
   background-color: #333;
   color: #ddd;
-  font-size: 12pt;
+  font-size: 1.6rem;
   font-weight: 300;
-  letter-spacing: 10px;
-  margin: 0 0 20px;
+  letter-spacing: 1rem;
+  margin: 0 0 2rem;
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
   width: 90%;
 }
 
+#restaurant-hours tr {
+  color: #666;
+  font-size: 1.6rem;
+}
+
+
 #restaurant-container {
   margin: 0 auto;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
-  padding: 40px 30px;
+  padding: 4rem 3rem;
   width: 50%;
+  position: relative;
+}
+
+.isFav {
+  color: red;
+}
+.fav-button {
+  font-size: 4rem;
+  position: absolute;
+  background-color: transparent;
+  border: 0;
+  bottom: 5rem;
+  right: 10rem;
+}
+
+@media only screen and (max-width: 60rem) {
+  
+#restaurant-container {
+ width: 100%;
+
+}
+
+.fav-button {
+  bottom: 20rem;
+  right: 5rem;
+}
+
+
+
 }
 </style>

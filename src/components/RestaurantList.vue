@@ -13,70 +13,88 @@ export default {
 
 <template>
 
-<ul id="restaurants-list" >
-  
-  <li v-for="(restaurant, index) in restaurants" :key="index" >
-    <img class="restaurant-img" :src="`./static/${restaurant.photograph}.jpg`">
-    <h1>{{restaurant.title}}</h1>
-    <p>{{restaurant.neighborhood}}</p>
-    <p>{{restaurant.address}}</p>
-    <transition name="fade" >
-    <router-link :to="`/restaurant/${restaurant.id}`"> View Details </router-link>
-    </transition>
-  </li>
-  </ul>
-
+<section class="restaurants-list-container">
+  <ul id="restaurants-list" >
+    
+    <li v-for="(restaurant, index) in restaurants" :key="index" >
+      <img class="restaurant-img" :src="`./static/${restaurant.photograph}.jpg`">
+      <h1>{{restaurant.title}}</h1>
+      <p>{{restaurant.neighborhood}}</p>
+      <p>{{restaurant.address}}</p>
+      <transition name="fade" >
+      <router-link :to="`/restaurant/${restaurant.id}`"> View Details </router-link>
+      </transition>
+    </li>
+    </ul>
+</section>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.restaurants-list-container {
+  max-width: 114rem;
+  margin: auto;
+}
+
 #restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
-  padding: 30px 15px 60px;
+  padding: 3rem 1.5rem 6rem;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
+
 #restaurants-list li {
   background-color: #fff;
-  border: 2px solid #ccc;
+  border: 0.2rem solid #ccc;
   font-family: Arial, sans-serif;
-  margin: 15px;
-  min-height: 380px;
-  padding: 0 30px 25px;
+  margin: 1.5rem;
+  max-width: 100%;
+  width: 32rem;
+  min-height: 38rem;
+  padding: 0 3rem 2.5rem;
   text-align: left;
-  width: 270px;
 }
+
 #restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
   margin: 0;
-  max-width: 100%;
-  min-height: 248px;
-  min-width: 100%;
+  width: calc(100% + 6rem);
+  margin-left: -3rem;
+  height: auto;
 }
+
 #restaurants-list li h1 {
-  color: #f18200;
+  color: #f44336;
   font-family: Arial, sans-serif;
-  font-size: 14pt;
-  font-weight: 200;
+  font-size: 2rem;
+  font-weight: bold;
   letter-spacing: 0;
   line-height: 1.3;
-  margin: 20px 0 10px;
+  margin: 2rem 0 1rem;
   text-transform: uppercase;
 }
+
 #restaurants-list p {
   margin: 0;
-  font-size: 11pt;
+  font-size: 1.6rem;
 }
+
 #restaurants-list li a {
   background-color: orange;
-  border-bottom: 3px solid #eee;
-  color: #fff;
+  border-bottom: 0.3rem solid #eee;
+  color: #424242;
   display: inline-block;
-  font-size: 10pt;
-  margin: 15px 0 0;
-  padding: 8px 30px 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 1.5rem 0 0;
+  padding: 0.8rem 3rem 1rem;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;

@@ -1,5 +1,3 @@
-
-
 <script>
 import MapContainer from "@/components/MapContainer.vue";
 import RestaurantDetails from "@/components/RestaurantDetails.vue";
