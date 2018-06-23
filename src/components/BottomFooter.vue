@@ -8,9 +8,7 @@ export default {
   
   <footer id="footer">
     Copyright (c) 2017
-    <a href="/">
-      <strong>Restaurant Reviews</strong>
-    </a> All Rights Reserved.
+      <router-link to="/"> <strong>Restaurant Reviews</strong></router-link>
   </footer>
 
 </template>

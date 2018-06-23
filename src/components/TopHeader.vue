@@ -7,7 +7,7 @@ export default {};
   <header>
     <nav>
       <h1>
-        <a href="/">Restaurant Reviews</a>
+        <router-link to="/">Restaurant Reviews</router-link>
       </h1>
     </nav>
   </header>

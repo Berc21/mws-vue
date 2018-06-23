@@ -39,7 +39,8 @@ export default {
 <template>
    <section id="restaurant-container">
       <h1 id="restaurant-name" > {{ restaurant.name }}</h1>
-      <img id="restaurant-img" class="restaurant-img" :src="`../static/${restaurant.photograph}.jpg`">
+      <img v-if="restaurant.photograph" id="restaurant-img" class="restaurant-img" :src="`../static/${restaurant.photograph}.jpg`">
+      <img v-else class="restaurant-img" :src="`../static/10.jpg`">
       <p id="restaurant-cuisine">{{restaurant.cuisine}}</p>
       <p id="restaurant-address">{{restaurant.address}}</p>
       <table id="restaurant-hours">

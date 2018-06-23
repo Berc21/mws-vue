@@ -1,12 +1,61 @@
 <script>
+import StarRating from "vue-star-rating";
+
 export default {
+  components: {
+    StarRating
+  },
   props: {
     comments: {
       type: Array,
       required: true
     }
   },
-  methods: {}
+  methods: {
+    deleteComment(id, index) {
+      let url = `http://localhost:1337/reviews/${id}`;
+
+      fetch(url, {
+        method: "DELETE"
+      })
+        .then(res => res.json())
+        .then(res => {
+          this.comments.splice(index, 1);
+        });
+    }
+  },
+  filters: {
+    beautifyDate(value) {
+      let date = new Date(value);
+
+      let year = date.getFullYear();
+
+      let day = date.getDate();
+
+      let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      let month = months[date.getMonth()];
+
+      let dateFormat = `${day} - ${month} - ${year} `;
+
+      return dateFormat;
+    },
+    numberize(value) {
+      return Number(value);
+    }
+  }
 };
 </script>
 
@@ -14,12 +63,16 @@ export default {
 <section id="reviews-container">
   
   <ul id="reviews-list" >
+    <transition-group name="fade">
     <li v-for="(comment, index) in comments" :key="index" >
          <p>{{comment.name}}</p>
-       <p>October 26, 2016</p>
-       <p>{{comment.rating}}</p>
+       <p>{{comment.createdAt | beautifyDate }}</p>
+       <p><star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="comment.rating | numberize" ></star-rating> </p>
        <p>{{comment.comments}}</p>
+
+       <button class="reviews-list__delete-button" @click="deleteComment(comment.id, index)"> Delete</button>
        </li>
+    </transition-group >
   </ul>
 </section>
      
@@ -57,6 +110,7 @@ export default {
   padding: 20px 20px;
   position: relative;
   width: 85%;
+  position: relative;
 }
 #reviews-list li p {
   margin: 0 0 10px;
@@ -65,19 +119,40 @@ export default {
   color: #666;
 }
 
-@media only screen and (max-width: 60rem) {
-  
-#reviews-container {
- width: 100%;
-
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
-#reviews-list li {
+.reviews-list__delete-button {
+  background: transparent;
+  border: 1px solid #f00;
+  border-radius: 2em;
+  color: #f00;
+  display: inline-block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 2px;
+  margin: 0 0 8px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  min-width: 20px;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+@media only screen and (max-width: 60rem) {
+  #reviews-container {
+    width: 100%;
+  }
+
+  #reviews-list li {
     width: 30rem;
     max-width: 100%;
   }
-
-
 }
-
 </style>

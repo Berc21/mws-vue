@@ -15,16 +15,18 @@ export default {
 
 <section class="restaurants-list-container">
   <ul id="restaurants-list" >
-    
+     
     <li v-for="(restaurant, index) in restaurants" :key="index" >
-      <img class="restaurant-img" :src="`./static/${restaurant.photograph}.jpg`">
-      <h1>{{restaurant.title}}</h1>
-      <p>{{restaurant.neighborhood}}</p>
-      <p>{{restaurant.address}}</p>
-      <transition name="fade" >
-      <router-link :to="`/restaurant/${restaurant.id}`"> View Details </router-link>
-      </transition>
+     
+        <img v-if="restaurant.photograph" class="restaurant-img" :src="`./static/${restaurant.photograph}.jpg`">
+        <img v-else class="restaurant-img" :src="`./static/10.jpg`">
+        <h1>{{restaurant.title}}</h1>
+        <p>{{restaurant.neighborhood}}</p>
+        <p>{{restaurant.address}}</p>
+        <router-link :to="`/restaurant/${restaurant.id}`"> View Details </router-link>
+       
     </li>
+    
     </ul>
 </section>
 </template>

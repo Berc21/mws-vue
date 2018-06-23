@@ -3,6 +3,7 @@ import MapContainer from "@/components/MapContainer.vue";
 import RestaurantDetails from "@/components/RestaurantDetails.vue";
 import RestaurantComments from "@/components/RestaurantComments.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
+import CommentForm from "@/components/CommentForm.vue";
 
 export default {
   components: {
@@ -10,6 +11,7 @@ export default {
     RestaurantDetails,
     RestaurantComments,
     BreadCrumb,
+    CommentForm,
   },
   created() {
 
@@ -20,8 +22,6 @@ export default {
 
     this.getComments(commentsUrl);
 
-
-    console.log(this.restaurant.name);
   },
   data() {
     return {
@@ -56,13 +56,14 @@ export default {
 </script>
 
 
-
 <template>
 <div>
 
  <bread-crumb :restaurant="restaurant" />
  <map-container :restaurants="restaurants" > </map-container>
  <restaurant-details :restaurant="restaurant" />
- <restaurant-comments  :comments="comments" />
+ <restaurant-comments :comments="comments" />
+ <comment-form :comments="comments" ></comment-form>
+
  </div>
 </template>
