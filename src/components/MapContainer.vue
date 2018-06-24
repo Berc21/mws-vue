@@ -68,11 +68,10 @@ export default {
     }, 10);
   },
   watch: {
-    restaurants(n, o) {
-         
-          this.myMap.geoObjects.removeAll();
+    restaurants(restaurants) {
+         if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
 
-          n.map(restaurant => {
+          restaurants.map(restaurant => {
           let lat = restaurant.latlng.lat;
           let lng = restaurant.latlng.lng;
           let name = restaurant.name;
@@ -81,8 +80,7 @@ export default {
             hintContent: name,
             balloonContent: name
           });
-
-          this.myMap.geoObjects.add(this.myPlacemark);
+          if (this.myMap.geoObjects) this.myMap.geoObjects.add(this.myPlacemark);
         });
        
     }
