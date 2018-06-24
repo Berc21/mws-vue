@@ -9,7 +9,7 @@ export default {
     Home,
     TopHeader,
     BottomFooter,
-  }
+  },
 };
 </script>
 
@@ -100,6 +100,7 @@ nav,
 section {
   display: block;
 }
+
 
 
 </style>

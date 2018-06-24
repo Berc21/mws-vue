@@ -74,6 +74,12 @@ export default {
        </li>
     </transition-group >
   </ul>
+
+  
+      <p class="no-comment" v-if="comments.length < 1">
+       No reviews found yet.
+      </p>
+  
 </section>
      
 </template>
@@ -144,6 +150,13 @@ export default {
   top: 2rem;
   right: 2rem;
 }
+
+.no-comment {
+  text-align: center;
+  font-size: 2.2rem;
+  color: orangered;
+}
+
 
 @media only screen and (max-width: 60rem) {
   #reviews-container {

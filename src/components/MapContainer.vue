@@ -3,14 +3,15 @@ export default {
   props: {
     restaurants: {
       type: Array,
-      required: true,
-    },
-
+      required: true
+    }
   },
   data() {
     return {
-      lng: '',
-    }
+      lng: "",
+      myMap: {},
+      myPlacemark: {},
+    };
   },
   methods: {
     clicked() {
@@ -18,52 +19,74 @@ export default {
     }
   },
   created() {
-      setTimeout(() => {
-
+    setTimeout(() => {
       let routeName = this.$route.name;
 
-        if (routeName === "Home"){
-           
-          let myMap = new ymaps.Map("map", {
-                center: [40.722216, -73.987501],
-                zoom: 12
+      if (routeName === "Home") {
+        this.myMap = new ymaps.Map("map", {
+          center: [40.722216, -73.987501],
+          zoom: 12
         });
 
-           this.restaurants.map((restaurant => {
-              let lat = restaurant.latlng.lat;
-              let lng = restaurant.latlng.lng;
-              let name = restaurant.name;
+        this.restaurants.map(restaurant => {
+          let lat = restaurant.latlng.lat;
+          let lng = restaurant.latlng.lng;
+          let name = restaurant.name;
 
-              let myPlacemark = new ymaps.Placemark([lat, lng], { hintContent: name, balloonContent: name  });
-            
-              myMap.geoObjects.add(myPlacemark);
-      
-           }));
-           
-        }
+          this.myPlacemark = new ymaps.Placemark([lat, lng], {
+            hintContent: name,
+            balloonContent: name
+          });
 
-        if(routeName === "Single") {
-         let restaurant; 
+          this.myMap.geoObjects.add(this.myPlacemark);
+        });
+      }
 
-         [restaurant] = this.restaurants.filter(restaurant => restaurant.id == this.$route.params.id);
-        
+      if (routeName === "Single") {
+        let restaurant;
+
+        [restaurant] = this.restaurants.filter(
+          restaurant => restaurant.id == this.$route.params.id
+        );
+
         let lat = restaurant.latlng.lat;
         let lng = restaurant.latlng.lng;
         let name = restaurant.name;
 
-        let myMap = new ymaps.Map("map", {
-                center: [lat, lng],
-                zoom: 12
+        this.myMap = new ymaps.Map("map", {
+          center: [lat, lng],
+          zoom: 12
         });
-        console.log(myMap);
-     
-        let myPlacemark = new ymaps.Placemark([lat, lng], { hintContent: name, balloonContent: name  });
-            
-        myMap.geoObjects.add(myPlacemark);   
-        }
-    }, 10)
-  },
 
+        this.myPlacemark = new ymaps.Placemark([lat, lng], {
+          hintContent: name,
+          balloonContent: name
+        });
+
+        this.myMap.geoObjects.add(this.myPlacemark);
+      }
+    }, 10);
+  },
+  watch: {
+    restaurants(n, o) {
+         
+          this.myMap.geoObjects.removeAll();
+
+          n.map(restaurant => {
+          let lat = restaurant.latlng.lat;
+          let lng = restaurant.latlng.lng;
+          let name = restaurant.name;
+
+          this.myPlacemark = new ymaps.Placemark([lat, lng], {
+            hintContent: name,
+            balloonContent: name
+          });
+
+          this.myMap.geoObjects.add(this.myPlacemark);
+        });
+       
+    }
+  },
 };
 </script>
 
@@ -85,6 +108,5 @@ export default {
   width: 100%;
   background-color: #ccc;
 }
-
 </style>
 
