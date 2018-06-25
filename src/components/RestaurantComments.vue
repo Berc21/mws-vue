@@ -99,11 +99,11 @@ export default {
       
       <div v-if="isEditing && comment.id == elIndex" >
       <form @submit.prevent="updateComment(comment.id, index)" >
-      <input type="text"  v-model="post.name"> <br>
-      <star-rating :star-size="30" :show-rating="false" :rating="comment.rating | numberize" v-model="post.rating" ></star-rating>
-       <textarea v-model="post.comments" style="width:100%; height: 100px;"></textarea>
-        <button type="submit" >Update</button>
-        <button @click="showEdit()">Cancel</button>
+      <input class="reviews-list__edit-name" type="text" v-model="post.name" required > <br>
+      <star-rating style="margin: 1rem 0;" :star-size="30" :show-rating="false" :rating="comment.rating | numberize" v-model="post.rating" ></star-rating>
+       <textarea class="reviews-list__edit-comment" v-model="post.comments" required ></textarea>
+        <button class="reviews-list__update-button" type="submit" >Update</button>
+        <button class="reviews-list__cancel-button" @click="showEdit()">Cancel</button>
         </form>
       </div>
 
@@ -112,7 +112,7 @@ export default {
        <p>{{comment.createdAt | beautifyDate }}</p>
        <p><star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="comment.rating | numberize" ></star-rating> </p>
        <p>{{comment.comments}}</p>
-       <button @click="showEdit(comment.id, comment.rating, comment.name, comment.comments)">Edit</button>
+       <button class="reviews-list__edit-button" @click="showEdit(comment.id, comment.rating, comment.name, comment.comments)">Edit</button>
       </div>
 
        <button class="reviews-list__delete-button" @click="deleteComment(comment.id, index)"> Delete</button>
@@ -178,6 +178,17 @@ export default {
   opacity: 0;
 }
 
+.reviews-list__edit-name {
+  padding: 1rem;
+  border-radius: 0.2rem;
+}
+.reviews-list__edit-comment {
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+}
 .reviews-list__delete-button {
   background: transparent;
   border: 1px solid #f00;
@@ -196,6 +207,49 @@ export default {
   right: 2rem;
 }
 
+.reviews-list__update-button {
+   background: transparent;
+  border: 1px solid #4CAF50;
+  border-radius: 2em;
+  color: #4CAF50;
+  display: inline-block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 2px;
+  margin: 0 0 8px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  min-width: 20px;
+}
+
+.reviews-list__cancel-button {
+   background: transparent;
+  border: 1px solid #f00;
+  border-radius: 2em;
+  color: #f00;
+  display: inline-block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 2px;
+  margin: 0 0 8px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  min-width: 20px;
+}
+.reviews-list__edit-button {
+  background: transparent;
+  border: 1px solid #008CBA;
+  border-radius: 2em;
+  color: #008CBA;
+  display: inline-block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 2px;
+  margin: 0 0 8px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  min-width: 20px;
+}
 .no-comment {
   text-align: center;
   font-size: 2.2rem;

@@ -67,13 +67,12 @@ export default {
       <table id="restaurant-hours">
 
         <tr v-for="(value, key) in restaurant.operating_hours" :key="key" >
-            {{ key }}: {{ value }}
+           <strong>  {{ key }}: </strong> {{ value }}
         </tr> 
       </table>
-      <div class="average">
-     <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating> 
-     <p class="average__text">Average Rating</p>
-         
+      <div  v-if="totalFav" class="average">
+        <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating> 
+        <p class="average__text">Average Rating</p>
       </div>
       <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
@@ -96,7 +95,7 @@ export default {
 }
 
 #restaurant-address {
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin: 10px 0px;
 }
 
@@ -112,11 +111,16 @@ export default {
   text-transform: uppercase;
   width: 90%;
 }
-
+#restaurant-hours {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
 #restaurant-hours tr {
   color: #666;
   font-size: 1.6rem;
 }
+
 
 #restaurant-container {
   margin: 0 auto;
@@ -160,7 +164,15 @@ export default {
     width: 100%;
   }
 
-  .fav-button {
+.average {
+  position: static;
+  margin-top: 1rem;
+}
+
+.average__star {
+  justify-content: center;
+}
+.fav-button {
     bottom: 20rem;
     right: 5rem;
   }
