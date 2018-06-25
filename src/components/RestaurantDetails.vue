@@ -1,24 +1,39 @@
 <script>
+import StarRating from "vue-star-rating";
 export default {
+  components: {
+    StarRating,
+  },
   props: {
     restaurant: {
       type: Object,
       required: true
+    },
+
+    comments: {
+      type: Array,
+      required: true
     }
   },
-   computed: {
-     
-     isFav() {
-       let fav;
-        if (this.restaurant.is_favorite === "true") {
+  computed: {
+    isFav() {
+      let fav;
+      if (this.restaurant.is_favorite === "true") {
         fav = true;
       } else {
         fav = false;
       }
       return fav;
+    },
 
-     }
- 
+    totalFav() {
+      let totalComments = this.comments.length;
+      let total = 0;
+
+      this.comments.map(item => (total += Number(item.rating)));
+
+      return total / totalComments;
+    }
   },
   methods: {
     handleLike() {
@@ -32,7 +47,7 @@ export default {
         .then(res => res.json())
         .then(res => (this.restaurant.is_favorite = res.is_favorite));
     }
-  },
+  }
 };
 </script>
 
@@ -50,12 +65,13 @@ export default {
         </tr> 
       </table>
 
+     <star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating>
+
       <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 #restaurant-name {
   color: #f44336;
   font-family: Arial, sans-serif;
@@ -94,7 +110,6 @@ export default {
   font-size: 1.6rem;
 }
 
-
 #restaurant-container {
   margin: 0 auto;
   border-bottom: 1px solid #d9d9d9;
@@ -117,18 +132,13 @@ export default {
 }
 
 @media only screen and (max-width: 60rem) {
-  
-#restaurant-container {
- width: 100%;
+  #restaurant-container {
+    width: 100%;
+  }
 
-}
-
-.fav-button {
-  bottom: 20rem;
-  right: 5rem;
-}
-
-
-
+  .fav-button {
+    bottom: 20rem;
+    right: 5rem;
+  }
 }
 </style>

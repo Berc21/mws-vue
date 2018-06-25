@@ -61,7 +61,7 @@ export default {
 
  <bread-crumb :restaurant="restaurant" />
  <map-container :restaurants="restaurants" > </map-container>
- <restaurant-details :restaurant="restaurant" />
+ <restaurant-details :restaurant="restaurant" :comments="comments" />
  <restaurant-comments :comments="comments" />
  <comment-form :comments="comments" ></comment-form>
 
