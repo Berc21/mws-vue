@@ -15,6 +15,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      fav: 0,
+    }
+  },
   computed: {
     isFav() {
       let fav;
@@ -32,7 +37,8 @@ export default {
 
       this.comments.map(item => (total += Number(item.rating)));
 
-      return total / totalComments;
+      this.fav = total / totalComments;
+      return this.fav;
     }
   },
   methods: {
@@ -64,9 +70,11 @@ export default {
             {{ key }}: {{ value }}
         </tr> 
       </table>
-
-     <star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating>
-
+      <div class="average">
+     <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating> 
+     <p class="average__text">Average Rating</p>
+         
+      </div>
       <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
@@ -117,6 +125,22 @@ export default {
   padding: 4rem 3rem;
   width: 50%;
   position: relative;
+}
+
+.average {
+   position: absolute;
+   bottom: 18%;
+   right: 10rem;
+   background: #fff;
+   padding: 1rem;
+   border-radius: 0.5rem;
+}
+.average__star {
+   font-size: 1.6rem;
+}
+.average__text {
+   text-align: center;
+   font-size: 1.6rem;
 }
 
 .isFav {
