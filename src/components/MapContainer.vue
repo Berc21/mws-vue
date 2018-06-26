@@ -65,7 +65,7 @@ export default {
 
         this.myMap.geoObjects.add(this.myPlacemark);
       }
-    }, 10);
+    }, 500);
   },
   watch: {
     restaurants(restaurants) {

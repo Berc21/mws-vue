@@ -2,7 +2,7 @@
 import StarRating from "vue-star-rating";
 export default {
   components: {
-    StarRating,
+    StarRating
   },
   props: {
     restaurant: {
@@ -17,8 +17,8 @@ export default {
   },
   data() {
     return {
-      fav: 0,
-    }
+      fav: 0
+    };
   },
   computed: {
     isFav() {
@@ -34,10 +34,9 @@ export default {
     totalFav() {
       let totalComments = this.comments.length;
       let total = 0;
-      
-      this.comments.map(item => (total += Number(item.rating)));
 
-      console.log(total/totalComments);
+      this.comments.map(item => (total += Number(item.rating)));
+      
       this.fav = total / totalComments;
       return this.fav;
     }
@@ -66,7 +65,6 @@ export default {
       <p id="restaurant-cuisine">{{restaurant.cuisine}}</p>
       <p id="restaurant-address">{{restaurant.address}}</p>
       <table id="restaurant-hours">
-
         <tr v-for="(value, key) in restaurant.operating_hours" :key="key" >
            <strong>  {{ key }}: </strong> {{ value }}
         </tr> 
@@ -124,7 +122,6 @@ export default {
   font-size: 1.6rem;
 }
 
-
 #restaurant-container {
   margin: 0 auto;
   border-bottom: 1px solid #d9d9d9;
@@ -142,21 +139,20 @@ export default {
   opacity: 0;
 }
 
-
 .average {
-   position: absolute;
-   bottom: 18%;
-   right: 10rem;
-   background: #fff;
-   padding: 1rem;
-   border-radius: 0.5rem;
+  position: absolute;
+  bottom: 18%;
+  right: 10rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 .average__star {
-   font-size: 1.6rem;
+  font-size: 1.6rem;
 }
 .average__text {
-   text-align: center;
-   font-size: 1.6rem;
+  text-align: center;
+  font-size: 1.6rem;
 }
 
 .isFav {
@@ -176,15 +172,15 @@ export default {
     width: 100%;
   }
 
-.average {
-  position: static;
-  margin-top: 1rem;
-}
+  .average {
+    position: static;
+    margin-top: 1rem;
+  }
 
-.average__star {
-  justify-content: center;
-}
-.fav-button {
+  .average__star {
+    justify-content: center;
+  }
+  .fav-button {
     bottom: 20rem;
     right: 5rem;
   }
