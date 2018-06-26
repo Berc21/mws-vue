@@ -34,9 +34,10 @@ export default {
     totalFav() {
       let totalComments = this.comments.length;
       let total = 0;
-
+      
       this.comments.map(item => (total += Number(item.rating)));
 
+      console.log(total/totalComments);
       this.fav = total / totalComments;
       return this.fav;
     }
@@ -70,10 +71,12 @@ export default {
            <strong>  {{ key }}: </strong> {{ value }}
         </tr> 
       </table>
+      <transition name="fade">
       <div  v-if="totalFav" class="average">
-        <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="totalFav" :increment="0.1" ></star-rating> 
+      <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="fav" :increment="0.1" ></star-rating> 
         <p class="average__text">Average Rating</p>
       </div>
+      </transition>
       <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
@@ -130,6 +133,15 @@ export default {
   width: 50%;
   position: relative;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 
 .average {
    position: absolute;

@@ -51,7 +51,7 @@ export default {
                     "content-type": "application/json"
                 }),
                 body: JSON.stringify(this.post)}).
-                then(res => res.json()).then(res => {this.comments[index] = res;  this.isEditing = false; } );
+                then(res => res.json()).then(res => { this.comments.splice(index, 1); this.comments.splice(index, 0, res); this.isEditing = false; } );
     }
   },
   filters: {
@@ -96,11 +96,11 @@ export default {
     <transition-group name="fade">
     <li v-for="(comment, index) in comments" :key="index" >
 
-      
+       
       <div v-if="isEditing && comment.id == elIndex" >
       <form @submit.prevent="updateComment(comment.id, index)" >
       <input class="reviews-list__edit-name" type="text" v-model="post.name" required > <br>
-      <star-rating style="margin: 1rem 0;" :star-size="30" :show-rating="false" :rating="comment.rating | numberize" v-model="post.rating" ></star-rating>
+        <star-rating style="margin: 1rem 0;" :star-size="30" :show-rating="false" :rating="comment.rating | numberize" v-model="post.rating" ></star-rating>
        <textarea class="reviews-list__edit-comment" v-model="post.comments" required ></textarea>
         <button class="reviews-list__update-button" type="submit" >Update</button>
         <button class="reviews-list__cancel-button" @click="showEdit()">Cancel</button>
@@ -109,14 +109,16 @@ export default {
 
       <div v-else>
       <p>{{comment.name}}</p>
-       <p>{{comment.createdAt | beautifyDate }}</p>
-       <p><star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="comment.rating | numberize" ></star-rating> </p>
+       <p v-if="comment.updatedAt == comment.createdAt">{{comment.createdAt | beautifyDate }}</p>
+       <p v-else>{{comment.updatedAt | beautifyDate }} - Edited</p>
+       <p><star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="comment.rating | numberize"  ></star-rating> </p>
        <p>{{comment.comments}}</p>
        <button class="reviews-list__edit-button" @click="showEdit(comment.id, comment.rating, comment.name, comment.comments)">Edit</button>
-      </div>
-
        <button class="reviews-list__delete-button" @click="deleteComment(comment.id, index)"> Delete</button>
+      </div>
+    
        </li>
+      
     </transition-group >
   </ul>
 
@@ -172,7 +174,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

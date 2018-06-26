@@ -13,33 +13,32 @@ export default {
   data() {
     return {
       post: {
-      restaurant_id : "",
-      name: "",
-      rating: 5,
-      comments: "",
+        restaurant_id: "",
+        name: "",
+        rating: 5,
+        comments: ""
       }
     };
   },
   methods: {
     submitForm() {
-      const url = "http://localhost:1337/reviews/"
+      const url = "http://localhost:1337/reviews/";
 
       this.post.restaurant_id = this.$route.params.id;
 
-
       fetch(url, {
-                method: "POST",
-                headers: new Headers({
-                    "content-type": "application/json"
-                }),
-                body: JSON.stringify(this.post)}).
-                then(res => res.json() ).then(res => { 
-                  this.comments.push(res) 
-                  this.clearForm;
-                } );
+        method: "POST",
+        headers: new Headers({
+          "content-type": "application/json"
+        }),
+        body: JSON.stringify(this.post)
+      })
+        .then(res => res.json())
+        .then(res => {
+          this.comments.push(res);
+          this.clearForm();
+        });
     },
-  },
-  computed: {
     clearForm() {
       let post = this.post;
 
