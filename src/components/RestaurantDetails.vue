@@ -1,5 +1,7 @@
 <script>
 import StarRating from "vue-star-rating";
+import IdbCRUD from "idbcrud";
+
 export default {
   components: {
     StarRating
@@ -17,8 +19,12 @@ export default {
   },
   data() {
     return {
-      fav: 0
+      totalRating: 0,
+      idbFavs: {}
     };
+  },
+  created() {
+    this.idbFavs = new IdbCRUD("favsDB", 1, "favs", "id");
   },
   computed: {
     isFav() {
@@ -31,14 +37,14 @@ export default {
       return fav;
     },
 
-    totalFav() {
+    calcTotalRating() {
       let totalComments = this.comments.length;
       let total = 0;
 
       this.comments.map(item => (total += Number(item.rating)));
-      
-      this.fav = total / totalComments;
-      return this.fav;
+
+      this.totalRating = total / totalComments;
+      return this.totalRating;
     }
   },
   methods: {
@@ -51,7 +57,12 @@ export default {
         method: "PUT"
       })
         .then(res => res.json())
-        .then(res => (this.restaurant.is_favorite = res.is_favorite));
+        .then(res => {
+          
+          fav ? this.idbFavs.add(res) :  this.idbFavs.delete(res.id);
+
+          this.restaurant.is_favorite = res.is_favorite;
+        });
     }
   }
 };
@@ -70,8 +81,8 @@ export default {
         </tr> 
       </table>
       <transition name="fade">
-      <div  v-if="totalFav" class="average">
-      <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="fav" :increment="0.1" ></star-rating> 
+      <div  v-if="calcTotalRating" class="average">
+      <star-rating class="average__star" :star-size="30" :show-rating="true" :read-only="true" :rating="totalRating" :increment="0.1" ></star-rating> 
         <p class="average__text">Average Rating</p>
       </div>
       </transition>

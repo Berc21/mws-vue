@@ -5,7 +5,7 @@ import RestaurantComments from "@/components/RestaurantComments.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 import CommentForm from "@/components/CommentForm.vue";
 
-import IdbCRUD from 'idbcrud';
+import IdbCRUD from "idbcrud";
 
 export default {
   components: {
@@ -13,19 +13,21 @@ export default {
     RestaurantDetails,
     RestaurantComments,
     BreadCrumb,
-    CommentForm,
+    CommentForm
   },
   created() {
-
-    this.idbRestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
+    this.idbRestaurants = new IdbCRUD("restaurantsDB", 1, "restaurants", "id");
 
     const restaurantsUrl = "http://localhost:1337/restaurants";
     this.getRestaurant(restaurantsUrl);
 
-    const commentsUrl = `http://localhost:1337/reviews/?restaurant_id=${this.$route.params.id}`;
+    this.idbComments = new IdbCRUD("commentsDB", 1, "comments", "id");
+
+    const commentsUrl = `http://localhost:1337/reviews/?restaurant_id=${
+      this.$route.params.id
+    }`;
 
     this.getComments(commentsUrl);
-
   },
   data() {
     return {
@@ -33,6 +35,7 @@ export default {
       restaurant: {},
       comments: [],
       idbRestaurants: {},
+      idbComments: {}
     };
   },
   methods: {
@@ -42,26 +45,33 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.restaurants = res;
-          [restaurant] = res.filter(
-            item => item.id == this.$route.params.id
-          );
+          [restaurant] = res.filter(item => item.id == this.$route.params.id);
           this.restaurant = restaurant;
         })
-        .catch(err => { this.idbRestaurants.getAll().then(data => { 
-          this.restaurants = data;  
-          [restaurant] = data.filter(
-            item => item.id == this.$route.params.id
-          );
-          this.restaurant = restaurant;
-          console.log("This is from indexeddb"); 
-          } ); });
+        .catch(err => {
+          this.idbRestaurants.getAll().then(data => {
+            this.restaurants = data;
+            [restaurant] = data.filter(
+              item => item.id == this.$route.params.id
+            );
+            this.restaurant = restaurant;
+           
+          });
+        });
     },
     getComments(url) {
       fetch(url)
         .then(res => res.json())
-        .then(res => this.comments = res
-        )
-        .catch(err => console.log(err));
+        .then(res => {
+          this.idbComments.addAll(res);
+          this.comments = res;
+        })
+        .catch(err => {
+          console.log(err);
+          this.idbComments.getAll().then(data => {
+          this.comments = data.filter(item => item.restaurant_id == this.$route.params.id);
+          });
+        });
     }
   }
 };

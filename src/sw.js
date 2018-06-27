@@ -21,7 +21,7 @@ workbox.clientsClaim();
     },
     {
       url: '/restaurant/',
-      revision: '1',
+      revision: '2',
     }
 	  ]);
 

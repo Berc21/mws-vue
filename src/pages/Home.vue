@@ -19,7 +19,7 @@ export default {
       beforeFiltered: [],
       favs: [],
       idbRestaurants: {},
-      idbFavss: {}
+      idbFavs: {}
     };
   },
   methods: {

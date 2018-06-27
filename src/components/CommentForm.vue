@@ -1,5 +1,8 @@
 <script>
 import StarRating from "vue-star-rating";
+
+
+
 export default {
   components: {
     StarRating
@@ -17,7 +20,8 @@ export default {
         name: "",
         rating: 5,
         comments: ""
-      }
+      },
+      idbComments: {},
     };
   },
   methods: {
@@ -36,6 +40,7 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.comments.push(res);
+
           this.clearForm();
         });
     },
