@@ -3,6 +3,10 @@
 import FilterOption from "@/components/FilterOption.vue";
 import RestaurantList from "@/components/RestaurantList.vue";
 import MapContainer from "@/components/MapContainer.vue";
+
+import IdbCRUD from 'idbcrud';
+
+
 export default {
   components: {
     RestaurantList,
@@ -13,7 +17,8 @@ export default {
     return {
       restaurants: [],
       isShownFav: false,
-      beforeFiltered: []
+      beforeFiltered: [],
+      idbrestaurants: {},
     };
   },
   methods: {
@@ -21,10 +26,13 @@ export default {
       fetch(url)
         .then(res => res.json())
         .then(res => {
+          this.idbrestaurants.addAll(res);
+          
+          // this.restaurants = res;
           this.restaurants = res;
           this.beforeFiltered = res;
         })
-        .catch(err => console.log(err));
+        .catch(err => { console.log("This is from indexeddb");  this.idbrestaurants.getAll().then(data => { this.restaurants = data; } ); });
     },
     getfav() {
       if (this.isShownFav) {
@@ -55,8 +63,13 @@ export default {
     }
   },
   created() {
+
+    this.idbrestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
+
+
     const url = "http://localhost:1337/restaurants";
     this.getRestaurants(url);
+ 
   }
 };
 </script>

@@ -5,6 +5,8 @@ import RestaurantComments from "@/components/RestaurantComments.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 import CommentForm from "@/components/CommentForm.vue";
 
+import IdbCRUD from 'idbcrud';
+
 export default {
   components: {
     MapContainer,
@@ -14,6 +16,8 @@ export default {
     CommentForm,
   },
   created() {
+
+    this.idbrestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
 
     const restaurantsUrl = "http://localhost:1337/restaurants";
     this.getRestaurant(restaurantsUrl);
@@ -28,6 +32,7 @@ export default {
       restaurants: [],
       restaurant: {},
       comments: [],
+      idbrestaurants: {},
     };
   },
   methods: {
@@ -42,7 +47,14 @@ export default {
           );
           this.restaurant = restaurant;
         })
-        .catch(err => console.log(err));
+        .catch(err => { this.idbrestaurants.getAll().then(data => { 
+          this.restaurants = data;  
+          [restaurant] = data.filter(
+            item => item.id == this.$route.params.id
+          );
+          this.restaurant = restaurant;
+          console.log("This is from indexeddb"); 
+          } ); });
     },
     getComments(url) {
       fetch(url)
@@ -58,6 +70,8 @@ export default {
 
 <template>
 <div>
+
+  
 
  <bread-crumb :restaurant="restaurant" />
  <map-container :restaurants="restaurants" > </map-container>
