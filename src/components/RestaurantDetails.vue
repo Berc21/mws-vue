@@ -11,7 +11,6 @@ export default {
       type: Object,
       required: true
     },
-
     comments: {
       type: Array,
       required: true
@@ -20,7 +19,7 @@ export default {
   data() {
     return {
       totalRating: 0,
-      idbFavs: {}
+      idbFavs: {},
     };
   },
   created() {
@@ -58,7 +57,7 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-          
+
           fav ? this.idbFavs.add(res) :  this.idbFavs.delete(res.id);
 
           this.restaurant.is_favorite = res.is_favorite;

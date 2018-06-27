@@ -3,7 +3,7 @@ import StarRating from "vue-star-rating";
 
 export default {
   components: {
-    StarRating,
+    StarRating
   },
   props: {
     comments: {
@@ -16,10 +16,10 @@ export default {
       isEditing: false,
       elIndex: null,
       post: {
-      name: null,
-      rating: 5,
-      comments: "",
-      },
+        name: null,
+        rating: 5,
+        comments: ""
+      }
     };
   },
   methods: {
@@ -45,13 +45,19 @@ export default {
     updateComment(id, index) {
       let url = `http://localhost:1337/reviews/${id}`;
 
-      fetch(url,  {
-                method: "PUT",
-                headers: new Headers({
-                    "content-type": "application/json"
-                }),
-                body: JSON.stringify(this.post)}).
-                then(res => res.json()).then(res => { this.comments.splice(index, 1); this.comments.splice(index, 0, res); this.isEditing = false; } );
+      fetch(url, {
+        method: "PUT",
+        headers: new Headers({
+          "content-type": "application/json"
+        }),
+        body: JSON.stringify(this.post)
+      })
+        .then(res => res.json())
+        .then(res => {
+          this.comments.splice(index, 1);
+          this.comments.splice(index, 0, res);
+          this.isEditing = false;
+        });
     }
   },
   filters: {
@@ -210,10 +216,10 @@ export default {
 }
 
 .reviews-list__update-button {
-   background: transparent;
-  border: 1px solid #4CAF50;
+  background: transparent;
+  border: 1px solid #4caf50;
   border-radius: 2em;
-  color: #4CAF50;
+  color: #4caf50;
   display: inline-block;
   font-size: 12px;
   height: 20px;
@@ -225,7 +231,7 @@ export default {
 }
 
 .reviews-list__cancel-button {
-   background: transparent;
+  background: transparent;
   border: 1px solid #f00;
   border-radius: 2em;
   color: #f00;
@@ -240,9 +246,9 @@ export default {
 }
 .reviews-list__edit-button {
   background: transparent;
-  border: 1px solid #008CBA;
+  border: 1px solid #008cba;
   border-radius: 2em;
-  color: #008CBA;
+  color: #008cba;
   display: inline-block;
   font-size: 12px;
   height: 20px;

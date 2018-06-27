@@ -1,7 +1,7 @@
 <script>
 import StarRating from "vue-star-rating";
 
-
+import IdbCRUD from "idbcrud";
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.comments.push(res);
-
+          this.idbComments.add(res);
           this.clearForm();
         });
     },
@@ -51,6 +51,9 @@ export default {
       post.rating = 5;
       post.comments = "";
     }
+  }, 
+  created() {
+    this.idbComments = new IdbCRUD("commentsDB", 1, "comments", "id");
   }
 };
 </script>
