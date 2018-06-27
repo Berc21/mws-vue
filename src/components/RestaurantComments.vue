@@ -1,6 +1,8 @@
 <script>
 import StarRating from "vue-star-rating";
 
+import IdbCRUD from "idbcrud";
+
 export default {
   components: {
     StarRating
@@ -19,8 +21,13 @@ export default {
         name: null,
         rating: 5,
         comments: ""
-      }
+      },
+      idbComments: {},
     };
+  },
+  created() {
+    this.idbComments = new IdbCRUD("commentsDB", 1, "comments", "id");
+
   },
   methods: {
     deleteComment(id, index) {
@@ -32,6 +39,7 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.comments.splice(index, 1);
+          this.idbComments.delete(id);
         });
     },
     showEdit(index, rating, name, comments) {
@@ -56,6 +64,7 @@ export default {
         .then(res => {
           this.comments.splice(index, 1);
           this.comments.splice(index, 0, res);
+          this.idbComments.add(res);
           this.isEditing = false;
         });
     }
