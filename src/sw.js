@@ -39,10 +39,17 @@ workbox.clientsClaim();
     })
   );
 
-  // Cache single restaurant page that are visited
+
+ /*  const bgSyncPlugin = new workbox.backgroundSync.Plugin('myQueueName', {
+    maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+  });
+  
   workbox.routing.registerRoute(
-		new RegExp('/restaurant/(.*)'),
-		workbox.strategies.networkFirst({
-		  cacheName: 'restaurant-single-pages'
-		})
-	  );
+    '',
+    workbox.strategies.networkOnly({
+      plugins: [bgSyncPlugin]
+    }),
+    'PUT'
+  ); */
+
+ 

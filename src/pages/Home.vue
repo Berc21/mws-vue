@@ -4,8 +4,7 @@ import FilterOption from "@/components/FilterOption.vue";
 import RestaurantList from "@/components/RestaurantList.vue";
 import MapContainer from "@/components/MapContainer.vue";
 
-import IdbCRUD from 'idbcrud';
-
+import IdbCRUD from "idbcrud";
 
 export default {
   components: {
@@ -18,7 +17,9 @@ export default {
       restaurants: [],
       isShownFav: false,
       beforeFiltered: [],
-      idbrestaurants: {},
+      favs: [],
+      idbRestaurants: {},
+      idbFavss: {}
     };
   },
   methods: {
@@ -26,22 +27,37 @@ export default {
       fetch(url)
         .then(res => res.json())
         .then(res => {
-          this.idbrestaurants.addAll(res);
-          
+          this.idbRestaurants.addAll(res);
+
           // this.restaurants = res;
           this.restaurants = res;
           this.beforeFiltered = res;
         })
-        .catch(err => { console.log("This is from indexeddb");  this.idbrestaurants.getAll().then(data => { this.restaurants = data; } ); });
+        .catch(err => {
+          console.log("This is from indexeddb");
+          this.idbRestaurants.getAll().then(data => {
+            this.restaurants = data;
+          });
+        });
     },
-    getfav() {
+    getFav(url) {
+      fetch(url)
+        .then(res => res.json())
+        .then(res => {
+          this.idbFavs.addAll(res);
+          this.favs = res;
+        }).catch(err => {
+          this.idbFavs.getAll().then(data => {
+            this.favs = data;
+          });
+        });
+    },
+    addFav() {
       if (this.isShownFav) {
-        const url = "http://localhost:1337/restaurants";
-        this.getRestaurants(url);
+        this.restaurants = this.beforeFiltered;
         this.isShownFav = false;
       } else {
-        const url = "http://localhost:1337/restaurants/?is_favorite=true";
-        this.getRestaurants(url);
+         this.restaurants = this.favs;
         this.isShownFav = true;
       }
     },
@@ -50,26 +66,32 @@ export default {
 
       this.restaurants = this.restaurants.filter(item => {
         if (option.cuisine == "All" && option.neighborhood == "All") {
-         return this.beforeFiltered;
+          return this.beforeFiltered;
         } else if (option.cuisine == "All") {
           return item.neighborhood == option.neighborhood;
         } else if (option.neighborhood == "All") {
           return item.cuisine_type == option.cuisine;
         } else {
-          return item.cuisine_type == option.cuisine &&
-            item.neighborhood == option.neighborhood;
+          return (
+            item.cuisine_type == option.cuisine &&
+            item.neighborhood == option.neighborhood
+          );
         }
       });
     }
   },
   created() {
+    this.idbRestaurants = new IdbCRUD("restaurantsDB", 1, "restaurants", "id");
+    const restaurantsUrl = "http://localhost:1337/restaurants";
 
-    this.idbrestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
+    this.getRestaurants(restaurantsUrl);
 
+    this.idbFavs = new IdbCRUD("favsDB", 1, "favs", "id");
+   
 
-    const url = "http://localhost:1337/restaurants";
-    this.getRestaurants(url);
- 
+    const favUrl = "http://localhost:1337/restaurants/?is_favorite=true";
+
+    this.getFav(favUrl);
   }
 };
 </script>
@@ -82,7 +104,7 @@ export default {
   <filter-option :restaurants="restaurants" @filtered="filterSelected" > </filter-option>
   <restaurant-list  :restaurants="restaurants"> </restaurant-list>
 
-  <button class="get-favorite-button" v-on:click="getfav" v-bind:class="{ isShownFav: isShownFav }" >  ❤  </button>
+  <button class="get-favorite-button" @click="addFav" v-bind:class="{ isShownFav: isShownFav }" >  ❤  </button>
  </div>
 </template>
 

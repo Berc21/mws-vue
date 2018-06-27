@@ -17,7 +17,7 @@ export default {
   },
   created() {
 
-    this.idbrestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
+    this.idbRestaurants = new IdbCRUD('restaurantsDB', 1, 'restaurants', 'id');
 
     const restaurantsUrl = "http://localhost:1337/restaurants";
     this.getRestaurant(restaurantsUrl);
@@ -32,7 +32,7 @@ export default {
       restaurants: [],
       restaurant: {},
       comments: [],
-      idbrestaurants: {},
+      idbRestaurants: {},
     };
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
           );
           this.restaurant = restaurant;
         })
-        .catch(err => { this.idbrestaurants.getAll().then(data => { 
+        .catch(err => { this.idbRestaurants.getAll().then(data => { 
           this.restaurants = data;  
           [restaurant] = data.filter(
             item => item.id == this.$route.params.id
