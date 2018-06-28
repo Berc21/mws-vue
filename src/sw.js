@@ -125,13 +125,13 @@ self.addEventListener("sync", function (event) {
     let idbFavSync = new IdbCRUD("idbFavSync", 1, "favsSync", "id");
     let idbFavs = new IdbCRUD("favsDB", 1, "favs", "id");
 
-   
+
     event.waitUntil(
       idbFavSync.getAll().then(data => {
         for (item of data) {
           const id = item.id;
           const fav = item.fav;
-          
+
           fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${fav}`, {
               method: "PUT"
             })
@@ -144,6 +144,31 @@ self.addEventListener("sync", function (event) {
         }
       })
     );
-   
+
+  } else if (event.tag == "idbCommentSync") {
+    let idbCommentSync = new IdbCRUD("idbCommentSync", 1, "commentSync", "idSync", true);
+    let idbComments = new IdbCRUD("commentsDB", 1, "comments", "id");
+
+    event.waitUntil(
+      idbCommentSync.getAll().then(posts => {
+          for(post of posts) {
+            const url = "http://localhost:1337/reviews/";
+             
+            fetch(url, {
+              method: "POST",
+              headers: new Headers({
+                "content-type": "application/json"
+              }),
+              body: JSON.stringify(post)
+            }).then(res => res.json()).then(res => {
+               
+                idbComments.add(res);
+                idbCommentSync.delete(post.idSync).then(() => console.log( post.idSync, "it's dleted"));
+            });
+
+          }
+      })
+    );
+
   }
 });

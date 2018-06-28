@@ -20,7 +20,7 @@ export default {
       post: {
         name: null,
         rating: 5,
-        comments: ""
+        comments: "",
       },
       idbComments: {},
     };
@@ -124,8 +124,11 @@ export default {
 
       <div v-else>
       <p>{{comment.name}}</p>
+      
        <p v-if="comment.updatedAt == comment.createdAt">{{comment.createdAt | beautifyDate }}</p>
        <p v-else>{{comment.updatedAt | beautifyDate }} - Edited</p>
+
+       
        <p><star-rating :star-size="30" :show-rating="false" :read-only="true" :rating="comment.rating | numberize"  ></star-rating> </p>
        <p>{{comment.comments}}</p>
        <button class="reviews-list__edit-button" @click="showEdit(comment.id, comment.rating, comment.name, comment.comments)">Edit</button>

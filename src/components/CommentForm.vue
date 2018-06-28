@@ -22,9 +22,47 @@ export default {
         comments: ""
       },
       idbComments: {},
+      idbCommentSync: {}
     };
   },
   methods: {
+    submitFormSync() {
+      const ifBrowserSupport =
+        "serviceWorker" in navigator && "SyncManager" in window;
+      if (ifBrowserSupport) {
+        navigator.serviceWorker.ready
+          .then(sw => {
+            this.post.restaurant_id = this.$route.params.id;
+
+            this.idbCommentSync
+              .add(this.post)
+              .then(() => {
+                sw.sync.register("idbCommentSync");
+
+                console.log("Your form is submitted");
+              })
+              .catch(err => console.log(err));
+
+            return sw;
+          })
+          .then(sw => {
+            console.log(sw);
+            let data = {
+              restaurant_id: this.post.restaurant_id,
+              name: this.post.name,
+              rating: this.post.rating,
+              comments: this.post.comments,
+              createdAt: new Date().toJSON(),
+              updatedAt: new Date().toJSON(),
+            };
+
+            this.comments.push(data);
+            this.clearForm();
+          });
+      } else {
+        this.submitForm();
+      }
+    },
     submitForm() {
       const url = "http://localhost:1337/reviews/";
 
@@ -51,16 +89,23 @@ export default {
       post.rating = 5;
       post.comments = "";
     }
-  }, 
+  },
   created() {
     this.idbComments = new IdbCRUD("commentsDB", 1, "comments", "id");
+    this.idbCommentSync = new IdbCRUD(
+      "idbCommentSync",
+      1,
+      "commentSync",
+      "idSync",
+      true
+    );
   }
 };
 </script>
 
 <template>
   <section class="review-form-container" >
-    <form @submit.prevent="submitForm" class="review-form">
+    <form @submit.prevent="submitFormSync" class="review-form">
       <fieldset class="review-form__fieldset">
         <legend class="review-form__legend">Write a Review</legend>
         <input class="review-form__name-input" type="text" v-model="post.name" name="name" placeholder="Enter your name" required >
