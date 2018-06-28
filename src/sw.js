@@ -14,16 +14,16 @@ class IdbCRUD {
       this.keyPath = keyPath
       this.autoIncrement = autoIncrement;
 
-      
+
       this.promise = idb.open(dbname, version, function (db) {
-          if (!db.objectStoreNames.contains(objectStore)) {
-            db.createObjectStore(objectStore, {
-              keyPath: keyPath,
-              autoIncrement: autoIncrement
-            });
-          }
-        });
-      
+        if (!db.objectStoreNames.contains(objectStore)) {
+          db.createObjectStore(objectStore, {
+            keyPath: keyPath,
+            autoIncrement: autoIncrement
+          });
+        }
+      });
+
     }
   }
 
@@ -123,23 +123,27 @@ self.addEventListener("sync", function (event) {
   if (event.tag == "idbFavSync") {
 
     let idbFavSync = new IdbCRUD("idbFavSync", 1, "favsSync", "id");
+    let idbFavs = new IdbCRUD("favsDB", 1, "favs", "id");
 
-
-    idbFavSync.getAll().then(data => {
-      for (item of data) {
-        const id = item.id;
-        const fav = item.fav;
-
-
-        fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${fav}`, {
-            method: "PUT"
-          })
-          .then(res => res.json())
-          .then(res => {
-            fav ? this.idbFavs.add(res) : this.idbFavs.delete(res.id);
-            console.log(res, "from idbFavSync sync" );
-          });
-      }
-    });
+   
+    event.waitUntil(
+      idbFavSync.getAll().then(data => {
+        for (item of data) {
+          const id = item.id;
+          const fav = item.fav;
+          
+          fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${fav}`, {
+              method: "PUT"
+            })
+            .then(res => res.json())
+            .then(res => {
+              fav ? idbFavs.add(res) : idbFavs.delete(res.id);
+              console.log(res, "from idbFavSync sync");
+              idbFavSync.delete(id);
+            })
+        }
+      })
+    );
+   
   }
 });
