@@ -104,7 +104,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     ]),
     new workboxPlugin.InjectManifest({
       swSrc: './src/sw.js',
-      swDest: './sw.js'
+      swDest: './sw.js',
+      precacheManifestFilename: 'wb-manifest.[manifestHash].js'
     })
   ]
 })

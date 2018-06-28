@@ -20,10 +20,13 @@ export default {
     return {
       totalRating: 0,
       idbFavs: {},
+      idbFavSync: {}
     };
   },
   created() {
     this.idbFavs = new IdbCRUD("favsDB", 1, "favs", "id");
+
+    this.idbFavSync = new IdbCRUD("idbFavSync", 1, "favsSync", "id");
   },
   computed: {
     isFav() {
@@ -47,7 +50,34 @@ export default {
     }
   },
   methods: {
-    handleLike() {
+    handleFavSync() {
+      const ifBrowserSupport =
+        "serviceWorker" in navigator && "SyncManager" in window;
+
+      if (ifBrowserSupport) {
+        let id = this.restaurant.id;
+        let restaurant = this.restaurant;
+
+        let fav = !this.isFav;
+
+        navigator.serviceWorker.ready.then(sw => {
+          let data = {
+            fav: fav,
+            id: id
+          };
+          this.idbFavSync
+            .add(data)
+            .then(() => {
+              sw.sync.register("idbFavSync");
+              this.restaurant.is_favorite = String(fav);
+            })
+            .catch(err => console.log(err));
+        });
+      } else {
+        this.handleFav();
+      }
+    },
+    handleFav() {
       let id = this.restaurant.id;
 
       let fav = !this.isFav;
@@ -57,8 +87,7 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-
-          fav ? this.idbFavs.add(res) :  this.idbFavs.delete(res.id);
+          fav ? this.idbFavs.add(res) : this.idbFavs.delete(res.id);
 
           this.restaurant.is_favorite = res.is_favorite;
         });
@@ -85,7 +114,7 @@ export default {
         <p class="average__text">Average Rating</p>
       </div>
       </transition>
-      <button @click="handleLike"   class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
+      <button @click="handleFavSync" class="fav-button" :class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

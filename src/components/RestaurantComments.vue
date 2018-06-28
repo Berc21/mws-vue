@@ -139,7 +139,7 @@ export default {
 
   
       <p class="no-comment" v-if="comments.length < 1">
-       No reviews found yet.
+          No reviews written yet.
       </p>
   
 </section>
