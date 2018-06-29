@@ -15,6 +15,8 @@
   "dependencies": {
     "idbcrud": "^1.0.3",
     "vue": "^2.5.2",
+    "vue-loading-spinner": "^1.0.11",
+    "vue-offline": "^1.0.203",
     "vue-router": "^3.0.1",
     "vue-star-rating": "^1.6.0",
     "workbox-webpack-plugin": "^3.3.0"

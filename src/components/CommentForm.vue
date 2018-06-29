@@ -19,7 +19,9 @@ export default {
         restaurant_id: "",
         name: "",
         rating: 5,
-        comments: ""
+        comments: "",
+        createdAt: new Date().toJSON(),
+        updatedAt: new Date().toJSON(),
       },
       idbComments: {},
     };
@@ -41,6 +43,7 @@ export default {
         .then(res => {
           this.comments.push(res);
           this.idbComments.add(res);
+          console.log("hey this is from fetch that synced")
           this.clearForm();
         });
     },
