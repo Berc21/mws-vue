@@ -5,12 +5,14 @@ import RestaurantList from "@/components/RestaurantList.vue";
 import MapContainer from "@/components/MapContainer.vue";
 
 import IdbCRUD from "idbcrud";
+import { Google } from "vue-loading-spinner";
 
 export default {
   components: {
     RestaurantList,
     FilterOption,
-    MapContainer
+    MapContainer,
+    Google
   },
   data() {
     return {
@@ -19,7 +21,8 @@ export default {
       beforeFiltered: [],
       favs: [],
       idbRestaurants: {},
-      idbFavs: {}
+      idbFavs: {},
+      restaurantLoading: true
     };
   },
   methods: {
@@ -55,6 +58,9 @@ export default {
               this.beforeFiltered = data;
             });
           }
+        })
+        .then(() => {
+          this.restaurantLoading = false;
         });
     },
     getFav(url) {
@@ -80,7 +86,7 @@ export default {
               err,
               "comments Failed to fetch. data will be shown from indexedDB"
             );
-              this.idbFavs.getAll().then(data => {
+            this.idbFavs.getAll().then(data => {
               this.favs = data;
             });
           }
@@ -137,11 +143,16 @@ export default {
   <filter-option :restaurants="restaurants" @filtered="filterSelected" > </filter-option>
   <restaurant-list  :restaurants="restaurants"> </restaurant-list>
 
+   <div  v-show="restaurantLoading" class="spinner-container" >
+    <google> </google>
+     <p class="spinner-text">Loading...</p>
+  </div>
+
   <button class="get-favorite-button" @click="addFav" v-bind:class="{ isShownFav: isShownFav }" >  ❤  </button>
  </div>
 </template>
 
-<style>
+<style scoped >
 .isShownFav {
   color: red;
 }
@@ -152,5 +163,16 @@ export default {
   font-size: 4rem;
   background-color: transparent;
   border: 0;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  z-index: 3;
+}
+.spinner-text {
+  font-size: 1.2rem;
+  font-size: bold;
 }
 </style>
