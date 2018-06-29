@@ -2,13 +2,15 @@
 import TopHeader from "@/components/TopHeader.vue";
 import Home from "@/pages/Home.vue";
 import BottomFooter from "@/components/BottomFooter.vue";
+import OfflineIndicator from "@/components/OfflineIndicator.vue"; 
 
 export default {
   name: "app",
   components: {
     Home,
     TopHeader,
-    BottomFooter
+    BottomFooter,
+    OfflineIndicator
   }
 };
 </script>
@@ -17,9 +19,8 @@ export default {
   <div id="app">
         <top-header/>
         <router-view />
-        <div class="center" v-show="OnlineOnly">you're online</div>
-        <div class="center"  v-show="OfflineOnly">you're offline</div>
         <bottom-footer/>
+        <offline-indicator/>
   </div>
 </template>
 
@@ -49,12 +50,6 @@ body {
   color: #333;
   background-color: #f3f3f3;
   position: relative;
-}
-
-.center {
-  text-align: center;
-  color: red;
-  font-size: 3rem;
 }
 
 :focus {
