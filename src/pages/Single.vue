@@ -88,14 +88,14 @@ export default {
             this.comments = res;
           } else {
             this.idbComments.addAll(res);
-            this.getFromIDB();
+            this.getCommentsFromIDB();
           }
         })
         .catch(err => {
           if (err.message == "Failed to fetch");
           {
             console.log(
-              "comments Failed to fetch. data will be shown from indexedDB"
+              err, "comments Failed to fetch. data will be shown from indexedDB"
             );
             this.cachedComments = true;
             this.getCommentsFromIDB();
