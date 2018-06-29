@@ -25,8 +25,13 @@ export default {
 </template>
 
 <style>
+
 @charset "utf-8";
 /* CSS Document */
+
+@import "https://unpkg.com/nprogress@0.2.0/nprogress.css";
+
+
 * {
   padding: 0;
   margin: 0;

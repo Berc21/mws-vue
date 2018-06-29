@@ -4,9 +4,21 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import NProgress from "nprogress";
 
+router.beforeResolve((to, from, next) => {
+  if (to.path) {
+    NProgress.start()
+  }
+  next()
+});
 
-Vue.config.productionTip = false
+router.afterEach(() => {
+  NProgress.done()
+});
+
+Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 window.addEventListener('load' ,() => {
@@ -20,3 +32,5 @@ window.addEventListener('load' ,() => {
   })
 
 });
+
+
