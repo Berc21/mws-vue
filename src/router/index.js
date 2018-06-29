@@ -3,26 +3,30 @@ import Router from 'vue-router'
 import Home from "@/pages/Home.vue";
 import Single from "@/pages/Single.vue";
 
+
+
 Vue.use(Router)
 
 export default new Router({
   base: __dirname,
   mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home,
-      props: true 
+      props: true
     },
     {
       path: '/restaurant/:id',
       name: 'Single',
       component: Single,
-      props: true 
+      props: true
     }
   ],
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
+  scrollBehavior(to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  },
 })

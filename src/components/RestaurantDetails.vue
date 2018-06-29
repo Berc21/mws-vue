@@ -50,33 +50,6 @@ export default {
     }
   },
   methods: {
-    handleFavSync() {
-      const ifBrowserSupport =
-        "serviceWorker" in navigator && "SyncManager" in window;
-
-      if (ifBrowserSupport) {
-        let id = this.restaurant.id;
-        let restaurant = this.restaurant;
-
-        let fav = !this.isFav;
-
-        navigator.serviceWorker.ready.then(sw => {
-          let data = {
-            fav: fav,
-            id: id
-          };
-          this.idbFavSync
-            .add(data)
-            .then(() => {
-              sw.sync.register("idbFavSync");
-              this.restaurant.is_favorite = String(fav);
-            })
-            .catch(err => console.log(err));
-        });
-      } else {
-        this.handleFav();
-      }
-    },
     handleFav() {
       let id = this.restaurant.id;
 
@@ -114,7 +87,7 @@ export default {
         <p class="average__text">Average Rating</p>
       </div>
       </transition>
-      <button @click="handleFavSync" class="fav-button" :class="{ isFav: isFav }" > ❤ </button>
+      <button @click="handleLike" class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -190,7 +163,7 @@ export default {
   font-size: 1.6rem;
 }
 .average__text {
-  text-align: center;
+
   font-size: 1.6rem;
 }
 
@@ -216,11 +189,9 @@ export default {
     margin-top: 1rem;
   }
 
-  .average__star {
-    justify-content: center;
-  }
+
   .fav-button {
-    bottom: 20rem;
+    bottom: 5rem;
     right: 5rem;
   }
 }

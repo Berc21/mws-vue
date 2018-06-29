@@ -2,6 +2,7 @@
 import TopHeader from "@/components/TopHeader.vue";
 import Home from "@/pages/Home.vue";
 import BottomFooter from "@/components/BottomFooter.vue";
+import OfflineIndicator from "@/components/OfflineIndicator.vue"; 
 
 export default {
   name: "app",
@@ -9,7 +10,8 @@ export default {
     Home,
     TopHeader,
     BottomFooter,
-  },
+    OfflineIndicator
+  }
 };
 </script>
 
@@ -18,17 +20,22 @@ export default {
         <top-header/>
         <router-view />
         <bottom-footer/>
+        <offline-indicator/>
   </div>
 </template>
 
 <style>
+
 @charset "utf-8";
 /* CSS Document */
+
+@import "https://unpkg.com/nprogress@0.2.0/nprogress.css";
+
+
 * {
   padding: 0;
   margin: 0;
 }
-
 *,
 *::before,
 *::after {
@@ -46,12 +53,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
   color: #333;
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   position: relative;
 }
 
 :focus {
-  outline: 0.2rem dotted #F44336;
+  outline: 0.2rem dotted #f44336;
 }
 
 ul,
@@ -100,7 +107,4 @@ nav,
 section {
   display: block;
 }
-
-
-
 </style>
