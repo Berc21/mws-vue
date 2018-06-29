@@ -87,7 +87,7 @@ export default {
         <p class="average__text">Average Rating</p>
       </div>
       </transition>
-      <button @click="handleLike" class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
+      <button @click="handleFav" class="fav-button" v-bind:class="{ isFav: isFav }" > ❤ </button>
     </section>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
