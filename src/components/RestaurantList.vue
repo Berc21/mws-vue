@@ -18,7 +18,7 @@ export default {
      
     <li v-for="(restaurant, index) in restaurants" :key="index" >
      
-        <img v-if="restaurant.photograph" class="restaurant-img" :src="`./static/${restaurant.photograph}.jpg`">
+        <img v-if="restaurant.photograph" class="restaurant-img" :src="`./static/${restaurant.photograph}sm.jpg`">
         <img v-else class="restaurant-img" :src="`./static/10.jpg`">
         <h1>{{restaurant.title}}</h1>
         <p>{{restaurant.neighborhood}}</p>

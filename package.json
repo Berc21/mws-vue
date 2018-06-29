@@ -19,10 +19,10 @@
     "vue-loading-spinner": "^1.0.11",
     "vue-offline": "^1.0.203",
     "vue-router": "^3.0.1",
-    "vue-star-rating": "^1.6.0",
-    "workbox-webpack-plugin": "^3.3.0"
+    "vue-star-rating": "^1.6.0"
   },
   "devDependencies": {
+    "workbox-webpack-plugin": "^3.3.0",
     "autoprefixer": "^7.1.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

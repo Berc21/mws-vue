@@ -26,7 +26,7 @@ export default {
       idbComments: {},
       cachedComments: false,
       cachedRestaurants: false,
-      restaurantLoading: true
+      restaurantLoading: true,
     };
   },
   created() {
@@ -132,19 +132,18 @@ export default {
 <template>
 <div>
 
+  <bread-crumb :restaurant="restaurant" />
   
-  
- <bread-crumb :restaurant="restaurant" />
- <map-container :restaurants="restaurants" > </map-container>
+  <map-container :restaurants="restaurants" > </map-container>
 
-  <div  v-show="restaurantLoading" class="spinner-container" >
-    <google> </google>
-     <p class="spinner-text">Loading...</p>
-  </div>
+    <div  v-show="restaurantLoading" class="spinner-container" >
+      <google> </google>
+      <p class="spinner-text">Loading...</p>
+    </div>
 
- <restaurant-details :restaurant="restaurant" :comments="comments" />
- <restaurant-comments :cachedComments="cachedComments" :comments="comments" />
- <comment-form :comments="comments" ></comment-form>
+  <restaurant-details :restaurant="restaurant" :comments="comments" />
+  <restaurant-comments :cachedComments="cachedComments" :comments="comments" />
+  <comment-form :comments="comments" ></comment-form>
 
  </div>
 </template>
